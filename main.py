@@ -2,27 +2,29 @@ from dotenv import load_dotenv
 from os import environ
 import openai
 from requests import request
-import json
-import random
+from json import loads
+from random import randint
+
+
 
 load_dotenv(".env")
 NEWS_KEY = environ["NEWS_KEY"]
 NEWS_ENDPOINT = environ["NEWS_ENDPOINT"]
 openai.api_key = environ["OPEN_KEY"]
 
-
+# function to get the news headline from newspi.org
 def create_headline():
-    random_index = random.randint(0, 25)
+    random_index = randint(0, 25)
     try:
         response = request("GET", f"{NEWS_ENDPOINT}{NEWS_KEY}")
         formatted = response.text
-        parse_json = json.loads(formatted)
+        parse_json = loads(formatted)
         news_title = parse_json["articles"][random_index]["title"]
-        news_article = parse_json["articles"][random_index]["content"]
-        return news_title, news_article
+        return news_title
     except Exception as e:
         return e
 
+# function that takes in the headline and prints out the image url
 def image(headline):
     response = openai.Image.create(
         prompt = headline,
@@ -30,18 +32,18 @@ def image(headline):
         size="512x512"
     )
     print(response["data"][0]["url"])
-
-def create_summary(article):
-    response = openai.Completion.create(
-        model = "text-davinci-003",
-        prompt = f"Summarize this for a ninth-grade student:{article}",
-        max_tokens = 4,
-        temperature = 0
-    )
-    return response
-
-
-
+    
+# Store the headline in new_headline 
+# Convert to String and pass to the image function
+# image function will print to the console the created link 
 new_headline = create_headline()
-image(str(new_headline[0]))
+
+try:
+    image(str(new_headline))
+except Exception as e:
+    print(e)
+
+
+
+
 
