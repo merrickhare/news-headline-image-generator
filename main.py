@@ -38,6 +38,7 @@ new_headline = create_headline()
 
 try:
     image(str(new_headline))
+    print(new_headline)
 except Exception as e:
     print(e)
 
