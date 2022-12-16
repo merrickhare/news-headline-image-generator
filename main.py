@@ -15,14 +15,12 @@ openai.api_key = environ["OPEN_KEY"]
 # function to get the news headline from newspi.org
 def create_headline():
     random_index = randint(0, 25)
-    try:
-        response = request("GET", f"{NEWS_ENDPOINT}{NEWS_KEY}")
-        formatted = response.text
-        parse_json = loads(formatted)
-        news_title = parse_json["articles"][random_index]["title"]
-        return news_title
-    except Exception as e:
-        return e
+    response = request("GET", f"{NEWS_ENDPOINT}{NEWS_KEY}")
+    formatted = response.text
+    parse_json = loads(formatted)
+    news_title = parse_json["articles"][random_index]["title"]
+    return news_title
+ 
 
 # function that takes in the headline and prints out the image url
 def image(headline):
