@@ -4,6 +4,7 @@ import openai
 from requests import request
 from json import loads
 from random import randint
+from pyfiglet import Figlet
 
 
 
@@ -29,18 +30,29 @@ def image(headline):
         n=1,
         size="512x512"
     )
-    print(response["data"][0]["url"])
+    return response["data"][0]["url"]
     
-# Store the headline in new_headline 
-# Convert to String and pass to the image function
-# image function will print to the console the created link 
-new_headline = create_headline()
+welcome = Figlet(font="slant")
+print(welcome.renderText(text="News Headline AI Image Maker....."))
+input("Press Enter/Return to continue.....")
 
-try:
-    image(str(new_headline))
-    print(new_headline)
+try:                                                                     # Try block to catch exceptions
+    new_headline = create_headline()                                     # saving the new headline
+    image_url = image(str(new_headline))                                 # converting the headline to a string for the image function
+    print(                                                               # print out the headline 
+        f'''
+        The URL generated is: 
+
+        {image_url}
+
+        This is the headline the image was generated from:
+
+        {new_headline}
+        '''
+        )     
+
 except Exception as e:
-    print(e)
+    print(f"Oops something went wrong: {e}")
 
 
 

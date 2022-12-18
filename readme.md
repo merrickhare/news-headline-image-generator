@@ -1,12 +1,9 @@
 # Generate Images from News Healdines
 
-### Modules: 
+# Install: 
 <em>dotenv</em>\
-<em>os</em>\
-<em>requests</em>\
 <em>OpenAI</em>\
-<em>Json</em>\
-<em>random</em>
+<em>Pyfiglet<em>
 
 # Required
 
