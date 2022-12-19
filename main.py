@@ -32,27 +32,35 @@ def image(headline):
     )
     return response["data"][0]["url"]
     
-welcome = Figlet(font="slant")
-print(welcome.renderText(text="News Headline AI Image Maker....."))
+welcome = Figlet(font="slant")                                           # New Figlet for asccii text
+print(welcome.renderText(text="News Headline Image Maker....."))         # Print the text out
 input("Press Enter/Return to continue.....")
 
-try:                                                                     # Try block to catch exceptions
-    new_headline = create_headline()                                     # saving the new headline
-    image_url = image(str(new_headline))                                 # converting the headline to a string for the image function
-    print(                                                               # print out the headline 
-        f'''
-        The URL generated is: 
+run = True
+while run:
+    try:                                                                     # Try block to catch exceptions
+        new_headline = create_headline()                                     # saving the new headline
+        image_url = image(str(new_headline))                                 # converting the headline to a string for the image function
+        print(                                                               # print out the headline 
+            f'''
+            The URL generated is: 
 
-        {image_url}
+            {image_url}
 
-        This is the headline the image was generated from:
+            This is the headline the image was generated from:
 
-        {new_headline}
-        '''
-        )     
-
-except Exception as e:
-    print(f"Oops something went wrong: {e}")
+            {new_headline}
+            '''
+            )     
+        keep_running = input("Try Again (y/n)?: ")
+        if keep_running == "n":
+            run = False
+    except Exception as e:
+        print(f"Oops something went wrong: {e}")
+        keep_running = input("Try Again (y/n)?: ")
+        if keep_running == "n":
+            run = False
+            
 
 
 
