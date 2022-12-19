@@ -52,15 +52,16 @@ while run:
             {new_headline}
             '''
             )     
-        keep_running = input("Try Again (y/n)?: ")
-        if keep_running == "n":
+        keep_running = input("Try Again (y/n)?: ")                          
+        if keep_running != "y":
             run = False
     except Exception as e:
         print(f"Oops something went wrong: {e}")
         keep_running = input("Try Again (y/n)?: ")
-        if keep_running == "n":
+        if keep_running != "y":
             run = False
             
+
 
 
 
