@@ -5,13 +5,25 @@ from requests import request
 from json import loads
 from random import randint
 from pyfiglet import Figlet
-
+import matplotlib.pyplot as plt
+import urllib.request
 
 
 load_dotenv(".env")
 NEWS_KEY = environ["NEWS_KEY"]
 NEWS_ENDPOINT = environ["NEWS_ENDPOINT"]
 openai.api_key = environ["OPEN_KEY"]
+
+
+
+
+def display_image_from_url(url):
+    with urllib.request.urlopen(url) as url:
+        image = plt.imread(url, format='jpg')
+    plt.imshow(image)
+    plt.tick_params(left=False,right=False,labelleft=False,labelbottom=False,bottom=False)
+    plt.show()
+
 
 # function to get the news headline from newspi.org
 def create_headline():
@@ -52,6 +64,7 @@ while run:
             {new_headline}
             '''
             )     
+        display_image_from_url(image_url)
         keep_running = input("Try Again (y/n)?: ")                          
         if keep_running != "y":
             run = False
