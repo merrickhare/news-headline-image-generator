@@ -10,8 +10,6 @@ import urllib.request
 
 
 load_dotenv(".env")
-NEWS_KEY = environ["NEWS_KEY"]
-NEWS_ENDPOINT = environ["NEWS_ENDPOINT"]
 openai.api_key = environ["OPEN_KEY"]
 
 
@@ -25,43 +23,33 @@ def display_image_from_url(url):
     plt.show()
 
 
-# function to get the news headline from newspi.org
-def create_headline():
-    random_index = randint(0, 25)
-    response = request("GET", f"{NEWS_ENDPOINT}{NEWS_KEY}")
-    formatted = response.text
-    parse_json = loads(formatted)
-    news_title = parse_json["articles"][random_index]["title"]
-    return news_title
  
 
-# function that takes in the headline and prints out the image url
-def image(headline):
+# function  prints out the image url
+def image(text_description):
     response = openai.Image.create(
-        prompt = headline,
+        prompt = f"{text_description}",
         n=1,
         size="512x512"
     )
     return response["data"][0]["url"]
     
-welcome = Figlet(font="slant")                                           # New Figlet for asccii text
-print(welcome.renderText(text="News Headline Image Maker....."))         # Print the text out
+welcome = Figlet(font="slant")                                
+print(welcome.renderText(text="AI Image Maker"))    
 input("Press Enter/Return to continue.....")
 
 run = True
 while run:
-    try:                                                                     # Try block to catch exceptions
-        new_headline = create_headline()                                     # saving the new headline
-        image_url = image(str(new_headline))                                 # converting the headline to a string for the image function
-        print(                                                               # print out the headline 
+    try:   
+        
+        image_description = input("Describe your image: ")                  
+        image_url = image(image_description)                             
+        print(                                              
             f'''
             The URL generated is: 
 
             {image_url}
 
-            This is the headline the image was generated from:
-
-            {new_headline}
             '''
             )     
         display_image_from_url(image_url)
