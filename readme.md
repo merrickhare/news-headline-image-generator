@@ -1,4 +1,5 @@
-# Generate Images from News Healdines
+# Generate Images from News Headlines
+## Add your news headline to the message input to generate your image
 
 # Install: 
 <em>dotenv</em>\
